@@ -1,5 +1,3 @@
-﻿using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class HexGrid : MonoBehaviour
@@ -16,9 +14,11 @@ public class HexGrid : MonoBehaviour
     private HexCell[] cells;
     private HexMesh hexMesh;
 
+
     private void Awake()
     {
         hexMesh = GetComponentInChildren<HexMesh>();
+        
 
         cells = new HexCell[width * height];
 
@@ -41,12 +41,12 @@ public class HexGrid : MonoBehaviour
         HexCell newCell = Instantiate(CellPrefab, this.transform);
         newCell.translateCoords = HexCoordinates.FromOffsetCoordinates(x, z);
         newCell.name = $"Cell {x}/{z}";
-        newCell.SetMarkText($"{newCell.translateCoords.ToString()}");
+        newCell.SetMarkText($"{newCell.translateCoords.ToStringWithNewLine()}");
 
         Vector3 position;
-        position.x = 10.5f * (x + z * 0.5f - z / 2);
+        position.x = HexMetrics.innerRadius*2 * (x + z * 0.5f - z / 2);
         position.y = 0;
-        position.z = 10.5f * z;
+        position.z = HexMetrics.outerRadius * 1.5f * z;
 
         newCell.transform.position = position;
 
