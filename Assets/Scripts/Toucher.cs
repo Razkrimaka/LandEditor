@@ -1,12 +1,15 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
-public class NewBehaviourScript : MonoBehaviour
+public class Toucher : MonoBehaviour
 {
+    public event EventHandler<HCEventArgs> TouchedCell;
+
     private void Update()
     {
-        if (Input.GetMouseButton(0))
+        if (Input.GetMouseButtonDown(0))
         {
             MouseClick();
         }
@@ -25,7 +28,7 @@ public class NewBehaviourScript : MonoBehaviour
 
     private void TouchCell (Vector3 position)
     {
-        position = transform.InverseTransformPoint(position);
-        Debug.Log($"Touched: {position}");
+        var coords = HexCoordinates.FromLocalPosition(position);
+        TouchedCell.Invoke(this, new HCEventArgs(coords, Color.blue));
     }
 }

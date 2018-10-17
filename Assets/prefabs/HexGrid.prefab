@@ -136,7 +136,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 06bca3e6ebaf58e45960b4664da807d0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  CellPrefab: {fileID: 114045174129835884, guid: d8f605d7d6d701b409973925b00cddef,
+  _cellPrefab: {fileID: 114045174129835884, guid: d8f605d7d6d701b409973925b00cddef,
     type: 2}
-  width: 5
-  height: 5
+  _toucher: {fileID: 114117902705762540, guid: 876830bc00afbfd4fa4a16e492e0cf8f, type: 2}
+  _width: 10
+  _height: 10
+  _brown: {r: 0.6698113, g: 0.4301235, b: 0.3001513, a: 1}
+  _green: {r: 0.19904771, g: 0.5943396, b: 0.23531316, a: 1}
+  _blue: {r: 0.25663045, g: 0.4308437, b: 0.6886792, a: 1}

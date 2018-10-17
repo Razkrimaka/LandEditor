@@ -3,43 +3,58 @@ using UnityEngine;
 public class HexGrid : MonoBehaviour
 {
     [SerializeField]
-    private HexCell CellPrefab;
+    private HexCell _cellPrefab;
 
     [SerializeField]
-    private int width;
+    private Toucher _toucher;
 
     [SerializeField]
-    private int height;
+    private int _width;
 
-    private HexCell[] cells;
-    private HexMesh hexMesh;
+    [SerializeField]
+    private int _height;
+
+    private HexCell[] _cells;
+    private HexMesh _hexMesh;
+
+    [SerializeField]
+    Color _brown;
+
+    [SerializeField]
+    Color _green;
+
+    [SerializeField]
+    Color _blue;
 
 
     private void Awake()
     {
-        hexMesh = GetComponentInChildren<HexMesh>();
+        _hexMesh = GetComponentInChildren<HexMesh>();
+        _toucher = Instantiate(_toucher);
+        _toucher.TouchedCell += OnCellTouched;
         
 
-        cells = new HexCell[width * height];
+        _cells = new HexCell[_width * _height];
 
-        for (int z = 0; z < height; z++)
+        for (int z = 0; z < _height; z++)
         {
-            for (int x = 0; x < width; x++)
+            for (int x = 0; x < _width; x++)
             {
-                cells[x + z * height] = CreateCell(x, z);
+                _cells[x + z * _height] = CreateCell(x, z);
             }
         } 
     }
 
     private void Start()
     {
-        hexMesh.Triangulate(cells);
+        _hexMesh.Triangulate(_cells);
     }
 
     private HexCell CreateCell(int x, int z)
     {
-        HexCell newCell = Instantiate(CellPrefab, this.transform);
+        HexCell newCell = Instantiate(_cellPrefab, this.transform);
         newCell.translateCoords = HexCoordinates.FromOffsetCoordinates(x, z);
+        newCell._color = _brown;
         newCell.name = $"Cell {x}/{z}";
         newCell.SetMarkText($"{newCell.translateCoords.ToStringWithNewLine()}");
 
@@ -51,5 +66,13 @@ public class HexGrid : MonoBehaviour
         newCell.transform.position = position;
 
         return newCell;
+    }
+
+
+    public void OnCellTouched (object sender, HCEventArgs e )
+    {
+        Debug.Log($"[OnCellTouched]: Z = {e.Coords.Z}; Z/2={e.Coords.Z / 2}");
+        int index = e.Coords.X + e.Coords.Z * _width + e.Coords.Z / 2;
+        _cells[index].SetColor(e.TouchColor);
     }
 }
