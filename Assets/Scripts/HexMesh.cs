@@ -31,14 +31,25 @@ public class HexMesh : MonoBehaviour
     }
 
     public void Triangulate(HexCell cell)
-    {
-        Vector3 center = cell.transform.position;
-        for (int i = 0; i < 6; i++)
+    {        
+        for (HexDirection currDir = 0; (int)currDir < 6; currDir++)
         {
-            AddTriangle(center, center + HexMetrics.corners[i], center + HexMetrics.corners[i + 1]);
-            AddPointsColor(cell._color);
+            Triangulate(currDir, cell);            
+        }         
+    }
+
+    public void Triangulate (HexDirection dir, HexCell cell)
+    {
+        AddTriangle(cell.Center, cell.Center + HexMetrics.corners[(int)dir], cell.Center + HexMetrics.corners[(int)dir + 1]);
+        if (cell.GetNeighbor(dir) != null)
+        {
+            var neigborColor = cell.GetNeighbor(dir).GetColor();
+            AddPointsColor(neigborColor, cell.GetColor());
         }
-        
+        else
+        {
+            AddPointsColor(cell.GetColor(), cell.GetColor());
+        }
     }
 
     private void AddTriangle (Vector3 p1, Vector3 p2, Vector3 p3)
@@ -53,9 +64,9 @@ public class HexMesh : MonoBehaviour
         triangles.Add(index + 2);
     }
 
-    private void AddPointsColor (Color color)
+    private void AddPointsColor (Color color, Color cellColor)
     {
-        colors.Add(color);
+        colors.Add(cellColor);
         colors.Add(color);
         colors.Add(color);
     }

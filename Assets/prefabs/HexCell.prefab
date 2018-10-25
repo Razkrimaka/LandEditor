@@ -139,3 +139,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mark: {fileID: 102118124043713608}
+  _neighbor:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  _color: {r: 0, g: 0, b: 0, a: 0}
+  translateCoords:
+    _x: 0
+    _z: 0
